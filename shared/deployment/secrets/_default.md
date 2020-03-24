@@ -74,7 +74,9 @@ build-secrets:
 
 This will mount the `super-secret-recipe` file as `/run/secrets/my-recipe` for all services, and `super-secret-recipe-2` as `/run/secrets/my-recipe2` for `service1` only. Again, note that the `/run/secrets` folder is only available during the image build, and not present in the image that is deployed to the devices.
 
-Subdirectories are supported in both the source (`.balena/secrets`) and the destination (`/run/secrets`)
+Subdirectories are supported in both the source (`.balena/secrets`) and the destination (`/run/secrets`).
+
+It is worth mentioning that if you want to copy the file `super-secret-recipe` from the `/run/secrets/my-recipy` folder to the container, you can't use the Dockerfile primitive `COPY`, but rather you have to use `RUN cp /run/secrets/my-recipy <destination>`.
 
 ### Build variables
 
