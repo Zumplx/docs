@@ -76,7 +76,7 @@ This will mount the `super-secret-recipe` file as `/run/secrets/my-recipe` for a
 
 Subdirectories are supported in both the source (`.balena/secrets`) and the destination (`/run/secrets`).
 
-It is worth mentioning that if you want to copy the file `super-secret-recipe` from the `/run/secrets/my-recipy` folder to the container, you can't use the Dockerfile primitive `COPY`, but rather you have to use `RUN cp /run/secrets/my-recipy <destination>`.
+It is worth mentioning that if you want to copy the file `super-secret-recipe` from the `/run/secrets/my-recipe` folder to the container you must use the RUN directive, e.g. `RUN cp /run/secrets/my-recipe <destination>`.
 
 ### Build variables
 
