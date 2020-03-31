@@ -74,7 +74,7 @@ build-secrets:
 
 This will mount the `super-secret-recipe` file into `/run/secrets/my-recipe` file in
 every build container. However, the `/run/secrets` folder will not be added to the
-"build context" (tar stream) that is sent to the Docker daemon (or balenaEngine),
+build context that is sent to the Docker daemon (or balenaEngine),
 and therefore:
 
 * The `/run/secrets/` folder will not be present in the image that is deployed to the devices.
