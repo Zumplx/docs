@@ -82,7 +82,7 @@ and therefore:
 * The folder will be available "for the duration of `RUN` directives", such that secrets can be
   accessed by scripts/code at image build time, for example:
 
-```sh
+```shell
 RUN cat /run/secrets/my-recipe | secret_processing_script.sh
 ```
 
