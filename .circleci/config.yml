@@ -1,37 +1,13 @@
----
-version: 2
-jobs:
-  build:
-    docker:
-      - image: library/docker:17.07.0-ce
-    working_directory: /tmp/build
-    environment:
-      DOCKER_USERNAME: travisciresin
-      DOCKER_EMAIL: accounts+travisci+docker@resin.io
-      DOCKER_IMAGE: resin/docs
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: |
-          docker info
-          env | sort
-          docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - run:
-          name: build
-          command: |
-            docker pull ${DOCKER_IMAGE}:latest || true
-            docker build --rm=false --pull --tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} .
-      - deploy:
-          name: deploy
-          command: |
-            docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-            docker push ${DOCKER_IMAGE}:${CIRCLE_SHA1}
-            docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} ${DOCKER_IMAGE}:${CIRCLE_BRANCH}
-            docker push ${DOCKER_IMAGE}:${CIRCLE_BRANCH}
-            docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} ${DOCKER_IMAGE}:latest
-            docker push ${DOCKER_IMAGE}:latest
-
-            if [ "${CIRCLE_TAG}" != "" ]; then
-              docker tag ${DOCKER_IMAGE}:${CIRCLE_SHA1} ${DOCKER_IMAGE}:${CIRCLE_TAG}
-              docker push ${DOCKER_IMAGE}:${CIRCLE_TAG}
-            fi
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+orbs:
+  # Declare a dependency on the welcome-orb
+  welcome: circleci/welcome-orb@0.4.1
+# Orchestrate or schedule a set of jobs
+workflows:
+  # Name the workflow "welcome"
+  welcome:
+    # Run the welcome/run job in its own container
+    jobs:
+      - welcome/run
